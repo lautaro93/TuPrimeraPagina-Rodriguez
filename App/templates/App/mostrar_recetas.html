@@ -1,0 +1,25 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mb-4 text-center">Recetas</h1>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for receta in recetas %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    {% if receta.imagen %}
+                    <img src="{{ receta.imagen }}" class="card-img-top" alt="Imagen de receta">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ receta.nombre }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ingredientes</h6>
+                        <p class="card-text">{{ receta.ingredientes }}</p>
+                        <h6 class="card-subtitle mb-2 text-muted">Instrucciones</h6>
+                        <p class="card-text">{{ receta.instrucciones }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

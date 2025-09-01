@@ -1,0 +1,28 @@
+{% extends "App/base.html" %}
+{% block content %}
+    <div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
+        <h1>Crear receta</h1>
+        <form style="width: 300px;" action="{% url 'crear_receta' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="imagen">Imagen URL:</label>
+                <input type="text" id="imagen" name="imagen" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="ingredientes">Ingredientes:</label>
+                <textarea id="ingredientes" name="ingredientes" required class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="instrucciones">Instrucciones:</label>
+                <textarea id="instrucciones" name="instrucciones" required class="form-control"></textarea>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
