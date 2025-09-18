@@ -1,0 +1,133 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="d-flex flex-column align-items-center">
+                <div class="w-100 mb-5" style="max-width: 400px;">
+                    <h2 class="text-center mb-4">Crear animal</h2>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form action="{% url 'animales' %}" method="post">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre:</label>
+                                    <input type="text" id="nombre" name="nombre" required class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edad" class="form-label">Edad:</label>
+                                    <input type="number" id="edad" name="edad" required class="form-control" min="0" max="100">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="especie" class="form-label">Especie:</label>
+                                    <input type="text" id="especie" name="especie" required class="form-control" placeholder="Ej: Perro, Gato, Loro...">
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" name="crear" class="btn btn-success">
+                                        <i class="fas fa-plus"></i> Crear animal
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 mb-4" style="max-width: 400px;">
+                    <h2 class="text-center mb-4">Buscar animal</h2>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form method="post" action="{% url 'animales' %}">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="nombre_buscar" class="form-label">Nombre del animal:</label>
+                                    <input type="text" id="nombre_buscar" name="nombre_buscar" class="form-control" placeholder="Buscar por nombre..." required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" name="buscar" class="btn btn-primary">
+                                        <i class="fas fa-search"></i> Buscar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% if animal %}
+                        <div class="card mt-3 border-success">
+                            <div class="card-header bg-success text-white">
+                                <h6 class="mb-0">Animal encontrado</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0">
+                                        <tr>
+                                            <td><strong>Nombre:</strong></td>
+                                            <td>{{ animal.nombre }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Edad:</strong></td>
+                                            <td>{{ animal.edad }} años</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Especie:</strong></td>
+                                            <td>{{ animal.especie }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% elif animal is not None %}
+                        <div class="alert alert-warning mt-3">
+                            <i class="fas fa-exclamation-triangle"></i> No se encontró ningún animal con ese nombre.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="sticky-top" style="top: 20px;">
+                <h2 class="text-center mb-4">Todos los animales</h2>
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">
+                            <i class="fas fa-list"></i> Lista Completa ({{ animales.count }} animales)
+                        </h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                            <table class="table table-striped table-hover mb-0">
+                                <thead class="table-light sticky-top">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Edad</th>
+                                        <th>Especie</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for animal in animales %}
+                                    <tr>
+                                        <td>
+                                            <i class="fas fa-paw text-muted me-1"></i>
+                                            {{ animal.nombre }}
+                                        </td>
+                                        <td>{{ animal.edad }} años</td>
+                                        <td>
+                                            <span class="badge bg-secondary">{{ animal.especie }}</span>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted py-4">
+                                            <i class="fas fa-info-circle"></i> No hay animales registrados aún.
+                                            <br><small>¡Crea el primero!</small>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

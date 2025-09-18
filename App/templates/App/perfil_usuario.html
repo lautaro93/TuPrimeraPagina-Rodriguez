@@ -1,0 +1,84 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Mi perfil</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>Información personal</h5>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Nombre de usuario:</strong></td>
+                                    <td>{{ user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email:</strong></td>
+                                    <td>{{ user.email|default:"No especificado" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Nombre:</strong></td>
+                                    <td>{{ user.first_name|default:"No especificado" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Apellido:</strong></td>
+                                    <td>{{ user.last_name|default:"No especificado" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha de registro:</strong></td>
+                                    <td>{{ user.date_joined|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Último acceso:</strong></td>
+                                    <td>{{ user.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center mb-4">
+                                {% if user.avatar.imagen %}
+                                    <img src="{{ user.avatar.imagen.url }}" alt="Avatar de {{ user.username }}" 
+                                         class="img-thumbnail rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                                {% else %}
+                                    <div class="bg-light border rounded-circle d-flex align-items-center justify-content-center" 
+                                         style="width: 150px; height: 150px; margin: 0 auto;">
+                                        <i class="fas fa-user fa-4x text-muted"></i>
+                                    </div>
+                                {% endif %}
+                                <p class="mt-2 mb-0"><strong>{{ user.username }}</strong></p>
+                            </div>
+                            
+                            <h5>Estadísticas</h5>
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">{{ total_recetas }}</h2>
+                                    <p class="mb-0">Recetas creadas</p>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{% url 'mis_recetas' %}" class="btn btn-outline-primary btn-sm">Ver mis recetas</a>
+                                <a href="{% url 'crear_receta' %}" class="btn btn-outline-success btn-sm">Crear nueva receta</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar perfil</a>
+                            <a href="{% url 'cambiar_password' %}" class="btn btn-warning">Cambiar contraseña</a>
+                        </div>
+                        <a href="{% url 'mostrar_recetas' %}" class="btn btn-secondary">Volver</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

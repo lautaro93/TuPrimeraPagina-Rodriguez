@@ -1,0 +1,12 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
+    <h2>Registro de usuario</h2>
+    <form method="post" action="{% url 'registrarse' %}" style="max-width: 400px;">
+        {% csrf_token %}
+        {{ formulario}}
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
+{% endblock %}

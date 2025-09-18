@@ -1,0 +1,12 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
+    <h2>Iniciar sesión</h2>
+    <form method="post" action="{% url 'iniciar_sesion' %}" style="max-width: 400px;">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+    </form>
+</div>
+{% endblock %}

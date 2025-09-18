@@ -3,51 +3,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa+One&display=swap" rel="stylesheet">
     <title>App</title>
 </head>
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
- <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+<body style="font-family: 'Changa One'; font-weight: 400; font-style: normal;">
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'crear_receta' %}">RecetasApp</a>
+            <a class="navbar-brand fs-5" href="{% url 'index' %}">RecetasApp</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'crear_receta' %}">Crear receta</a>
-                    </li>
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'mostrar_recetas' %}">Mostrar recetas</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'buscar_receta' %}">Buscar receta</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'crear_usuario' %}">Crear usuario</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'mostrar_usuarios' %}">Mostrar usuarios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'buscar_usuario' %}">Buscar usuario</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'crear_animal' %}">Crear animal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'mostrar_animales' %}">Mostrar animales</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'buscar_animal' %}">Buscar animal</a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'crear_receta' %}">Crear receta</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'mis_recetas' %}">Mis recetas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'animales' %}">Animales</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about' %}">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if user.avatar.imagen %}
+                                    <img src="{{ user.avatar.imagen.url }}" alt="Avatar" 
+                                         class="rounded-circle me-2" 
+                                         style="width: 32px; height: 32px; object-fit: cover;">
+                                {% else %}
+                                    <div class="bg-light rounded-circle me-2 d-flex align-items-center justify-content-center" 
+                                         style="width: 32px; height: 32px;">
+                                        <i class="fas fa-user text-muted" style="font-size: 16px;"></i>
+                                    </div>
+                                {% endif %}
+                                {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'perfil_usuario' %}">Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'mis_recetas' %}">Mis recetas</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registrarse' %}">Registrarse</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
-      {% block content %}
+    
+    {% block content %}
     {% endblock %}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

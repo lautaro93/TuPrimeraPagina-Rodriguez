@@ -1,0 +1,88 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Editar perfil</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="mb-3">Información personal</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ perfil_form.email.id_for_label }}" class="form-label">Email:</label>
+                                    {{ perfil_form.email }}
+                                    {% if perfil_form.email.errors %}
+                                        <div class="text-danger">{{ perfil_form.email.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ perfil_form.first_name.id_for_label }}" class="form-label">Nombre:</label>
+                                    {{ perfil_form.first_name }}
+                                    {% if perfil_form.first_name.errors %}
+                                        <div class="text-danger">{{ perfil_form.first_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="{{ perfil_form.last_name.id_for_label }}" class="form-label">Apellido:</label>
+                                    {{ perfil_form.last_name }}
+                                    {% if perfil_form.last_name.errors %}
+                                        <div class="text-danger">{{ perfil_form.last_name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="mb-3">Avatar</h5>
+                                {% if user.avatar.imagen %}
+                                    <div class="mb-3 text-center">
+                                        <img src="{{ user.avatar.imagen.url }}" alt="Avatar actual" 
+                                             class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                                        <p class="small text-muted mt-1">Avatar actual</p>
+                                    </div>
+                                {% else %}
+                                    <div class="mb-3 text-center">
+                                        <div class="bg-light border rounded p-4" style="width: 150px; height: 150px; margin: 0 auto;">
+                                            <i class="fas fa-user fa-4x text-muted"></i>
+                                        </div>
+                                        <p class="small text-muted mt-1">Sin avatar</p>
+                                    </div>
+                                {% endif %}
+                                
+                                <div class="mb-3">
+                                    <label for="{{ avatar_form.imagen.id_for_label }}" class="form-label">Cambiar avatar:</label>
+                                    {{ avatar_form.imagen }}
+                                    {% if avatar_form.imagen.errors %}
+                                        <div class="text-danger">{{ avatar_form.imagen.errors }}</div>
+                                    {% endif %}
+                                    <div class="form-text">Formatos: JPG, PNG. Max: 5MB</div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if perfil_form.non_field_errors or avatar_form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ perfil_form.non_field_errors }}
+                                {{ avatar_form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'perfil_usuario' %}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

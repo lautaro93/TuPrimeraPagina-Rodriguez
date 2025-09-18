@@ -1,6 +1,6 @@
 {% extends "App/base.html" %}
 {% block content %}
-    <div class="d-flex flex-column min-vh-75 justify-content-center align-items-center">
+    <div class="d-flex flex-column min-vh-75 justify-content-center align-items-center mt-4">
         <h1>Crear receta</h1>
         <form style="width: 300px;" action="{% url 'crear_receta' %}" method="post">
             {% csrf_token %}

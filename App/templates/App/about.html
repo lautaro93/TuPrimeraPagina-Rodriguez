@@ -1,0 +1,128 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h2 class="display-6 text-primary mb-3">Acerca de RecetasApp</h2>
+            <p class="lead text-muted">Tu plataforma favorita para descubrir y compartir recetas deliciosas</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="text-primary mb-3">Nuestra misión</h2>
+            <p class="text-justify">
+                En RecetasApp creemos que la cocina es un arte que debe ser compartido. Nuestra misión es crear 
+                una comunidad donde los amantes de la gastronomía puedan descubrir nuevas recetas, 
+                compartir sus creaciones culinarias y aprender unos de otros.
+            </p>
+            <p class="text-justify">
+                Queremos hacer que cocinar sea accesible, divertido y social para todos, 
+                sin importar tu nivel de experiencia en la cocina.
+            </p>
+        </div>
+
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="text-primary">¿Qué nos hace especiales?</h2>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-check-circle fa-2x text-success"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5>Fácil de usar</h5>
+                    <p>Interfaz intuitiva que hace que compartir y encontrar recetas sea muy sencillo.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-users fa-2x text-info"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5>Comunidad activa</h5>
+                    <p>Una comunidad vibrante de cocineros dispuestos a compartir sus conocimientos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-mobile-alt fa-2x text-warning"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5>Responsive</h5>
+                    <p>Accede a tus recetas favoritas desde cualquier dispositivo, en cualquier momento.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="d-flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-star fa-2x text-primary"></i>
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h5>Contenido de calidad</h5>
+                    <p>Recetas probadas y aprobadas por nuestra comunidad de usuarios.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="text-primary">Tecnología</h2>
+        </div>
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-center">
+                        RecetasApp está construida con las mejores tecnologías web modernas:
+                    </p>
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <i class="fab fa-python fa-3x text-primary"></i>
+                            <h6 class="mt-2">Django</h6>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="fab fa-bootstrap fa-3x text-purple"></i>
+                            <h6 class="mt-2">Bootstrap</h6>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="fas fa-database fa-3x text-success"></i>
+                            <h6 class="mt-2">SQLite</h6>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="fab fa-html5 fa-3x text-danger"></i>
+                            <h6 class="mt-2">HTML5</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h3 class="mb-3">¿Tienes alguna pregunta?</h3>
+                    <p class="mb-4">Nos encantaría escuchar de ti. Contáctanos o únete a nuestra comunidad.</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'registrarse' %}" class="btn btn-light btn-lg">
+                                <i class="fas fa-user-plus"></i> Únete ahora
+                            </a>
+                        {% endif %}
+                        <a href="{% url 'mostrar_recetas' %}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-utensils"></i> Ver recetas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "App/base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row bg-primary text-white py-5 mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-normal mb-3">¡Bienvenido a RecetasApp!</h1>
+            <p class="lead mb-4">Descubre, comparte y disfruta las mejores recetas de nuestra comunidad</p>
+            {% if not user.is_authenticated %}
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'registrarse' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-user-plus"></i> Únete ahora
+                    </a>
+                    <a href="{% url 'iniciar_sesion' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar sesión
+                    </a>
+                </div>
+            {% else %}
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'crear_receta' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-plus"></i> Crear receta
+                    </a>
+                    <a href="{% url 'mis_recetas' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-book"></i> Mis recetas
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-12 text-center mb-4">
+            <h2 class="display-6">¿Qué puedes hacer aquí?</h2>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">Descubrir recetas</h5>
+                    <p class="card-text">Explora miles de recetas deliciosas creadas por nuestra comunidad de cocineros.</p>
+                    <a href="{% url 'mostrar_recetas' %}" class="btn btn-outline-primary">Ver recetas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-plus-circle fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">Compartir recetas</h5>
+                    <p class="card-text">Comparte tus recetas favoritas con la comunidad y ayuda a otros a cocinar mejor.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'crear_receta' %}" class="btn btn-outline-success">Crear Receta</a>
+                    {% else %}
+                        <a href="{% url 'registrarse' %}" class="btn btn-outline-success">Únete Ahora</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">Comunidad</h5>
+                    <p class="card-text">Únete a una comunidad apasionada por la cocina y aprende de otros chefs.</p>
+                    <a href="{% url 'about' %}" class="btn btn-outline-info">Saber Más</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row bg-light py-5 mb-5">
+        <div class="col-12 text-center">
+            <h3 class="mb-4">Nuestra comunidad en números</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h2 class="text-primary">{{ total_recetas }}</h2>
+                        <p class="lead">Recetas compartidas</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h2 class="text-success">{{ total_usuarios }}</h2>
+                        <p class="lead">Usuarios registrados</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center">
+                        <h2 class="text-info">24/7</h2>
+                        <p class="lead">Disponible siempre</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row text-center mb-5">
+        <div class="col-12">
+            <h3 class="mb-4">¿Listo para empezar a cocinar?</h3>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'mostrar_recetas' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-utensils"></i> Ver todas las recetas
+                </a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'registrarse' %}" class="btn btn-success btn-lg">
+                        <i class="fas fa-rocket"></i> Comenzar ahora
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

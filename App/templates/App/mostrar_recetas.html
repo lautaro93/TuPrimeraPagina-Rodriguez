@@ -1,22 +1,74 @@
 {% extends "App/base.html" %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mb-4 text-center">Recetas</h1>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="container-fluid px-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+            <h1 class="text-center">
+                {% if usuario_filtrado %}
+                    Recetas de {{ usuario_filtrado.username }}
+                {% else %}
+                    Todas las recetas
+                {% endif %}
+            </h1>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    Filtrar por usuario
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'mostrar_recetas' %}">Todas las recetas</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'mis_recetas' %}">Mis recetas</a></li>
+                    {% endif %}
+                    <li><hr class="dropdown-divider"></li>
+                    {% for usuario in usuarios_con_recetas %}
+                        <li><a class="dropdown-item" href="?usuario={{ usuario.id }}">{{ usuario.username }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-3">
             {% for receta in recetas %}
             <div class="col">
                 <div class="card h-100 shadow-sm">
                     {% if receta.imagen %}
-                    <img src="{{ receta.imagen }}" class="card-img-top" alt="Imagen de receta">
+                    <img src="{{ receta.imagen }}" class="card-img-top" alt="Imagen de receta" style="height: 200px; object-fit: cover;">
                     {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ receta.nombre }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Ingredientes</h6>
-                        <p class="card-text">{{ receta.ingredientes }}</p>
-                        <h6 class="card-subtitle mb-2 text-muted">Instrucciones</h6>
-                        <p class="card-text">{{ receta.instrucciones }}</p>
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title fw-bold mb-2">{{ receta.nombre }}</h6>
+                        {% if receta.autor %}
+                        <div class="mb-2">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-light text-dark me-2">
+                                    👤 {{ receta.autor.username }}
+                                </span>
+                                {% if receta.autor == user %}
+                                    <span class="badge bg-primary">Tu receta</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="mt-auto">
+                            <h6 class="card-subtitle mb-1 text-muted">Ingredientes</h6>
+                            <p class="card-text small">{{ receta.ingredientes|truncatewords:8 }}</p>
+                            <h6 class="card-subtitle mb-1 text-muted">Instrucciones</h6>
+                            <p class="card-text small">{{ receta.instrucciones|truncatewords:10 }}</p>
+                        </div>
                     </div>
+                    <div class="card-footer bg-transparent">
+                        <small class="text-muted">
+                            Creado por <strong>{{ receta.autor.username|default:"Anónimo" }}</strong>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    {% if usuario_filtrado %}
+                        {{ usuario_filtrado.username }} no tiene recetas.
+                    {% else %}
+                        No hay recetas para mostrar.
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
